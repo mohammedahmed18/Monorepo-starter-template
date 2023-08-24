@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# copy the frontend build to the nginx folder
+cp -r dist/apps/frontend/* /usr/share/nginx/html
+
 # Start Nginx server
 nginx -g "daemon off;" &
 

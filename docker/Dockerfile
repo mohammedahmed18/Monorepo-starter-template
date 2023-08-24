@@ -37,10 +37,6 @@ RUN nx run-many --target=build --projects=server,docit --skip-nx-cache
 COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
 
 
-# Copy frontend files to Nginx document root directory from build stage
-COPY dist/apps/docit /usr/share/nginx/html/
-
-
 # Set up entrypoint script
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
