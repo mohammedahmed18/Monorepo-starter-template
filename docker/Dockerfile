@@ -31,8 +31,7 @@ RUN npm ci
 COPY . .
 
 # Build the apps
-RUN nx run-many --target=build --project=server --target=export --project=docit --skip-nx-cache
-
+RUN nx run-many --target=build --project=server --target=build --project=docit --skip-nx-cache
 
 # Copy Nginx configuration template
 COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
