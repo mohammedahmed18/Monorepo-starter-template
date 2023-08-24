@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # copy the frontend build to the nginx folder
-cp -r dist/apps/docit/* /usr/share/nginx/html
+cp -r dist/apps/docit/exported/* /usr/share/nginx/html
 
 # Start Nginx server
 nginx -g "daemon off;" &

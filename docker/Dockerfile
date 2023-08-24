@@ -30,12 +30,15 @@ RUN npm ci
 # copy the rest of the files
 COPY . .
 
-# Build the app
-RUN nx run-many --target=build --projects=server,docit --skip-nx-cache
+# Build the apps
+RUN nx run-many --target=build --project=server --target=export --project=docit --skip-nx-cache
+
 
 # Copy Nginx configuration template
 COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
 
+## Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/*
 
 # Set up entrypoint script
 COPY entrypoint.sh /
