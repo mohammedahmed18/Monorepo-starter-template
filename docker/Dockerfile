@@ -36,10 +36,12 @@ RUN nx run-many --target=build --projects=server,docit --skip-nx-cache
 # Copy Nginx configuration template
 COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
 
+ENV PORT=80
 
 # Set up entrypoint script
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 4200
+
+EXPOSE 80
