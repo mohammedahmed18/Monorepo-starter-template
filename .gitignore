@@ -40,3 +40,9 @@ Thumbs.db
 
 # Next.js
 .next
+
+#nestjs
+/dist
+
+# yarn
+.yarn/*
