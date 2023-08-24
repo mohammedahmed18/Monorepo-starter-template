@@ -24,7 +24,7 @@ WORKDIR /user/app
 RUN npm install -g nx
 
 # clean install of dependencies
-COPY package.json .
+COPY package*.json ./
 RUN npm ci
 
 # copy the rest of the files
