@@ -14,5 +14,8 @@ npm set-script start "next start -p 4200"
 # start the client server in the background
 npm run start &
 
+# cd into the server
+cd ../server
+
 # Start backend server
-node --enable-source-maps dist/apps/server/main.js
+node --enable-source-maps main.js
