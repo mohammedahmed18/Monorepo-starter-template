@@ -38,7 +38,7 @@ COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
 
 
 # Copy frontend files to Nginx document root directory from build stage
-COPY /usr/app/dist/apps/docit /usr/share/nginx/html/
+COPY dist/apps/docit /usr/share/nginx/html/
 
 
 # Set up entrypoint script
