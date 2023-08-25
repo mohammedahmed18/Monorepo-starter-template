@@ -33,12 +33,6 @@ COPY . .
 # Build the apps
 RUN nx run-many --target=build --project=server --target=build --project=docit --skip-nx-cache
 
-# Copy Nginx configuration template
-COPY apps/docit/nginx.conf /etc/nginx/nginx.conf
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
 # Set up entrypoint script
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
