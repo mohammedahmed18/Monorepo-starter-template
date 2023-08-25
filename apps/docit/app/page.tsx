@@ -24,7 +24,7 @@ export default function Index() {
       setData(newData);
     })()
 
-  });
+  },[]);
     
 
   return (
