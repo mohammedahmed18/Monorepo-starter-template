@@ -23,10 +23,6 @@ WAIT_FOR_IT_SCRIPT="$ROOT_DIR/scripts/wait-for-it.sh"
 # Make the wait-for-it.sh script executable
 chmod +x "$WAIT_FOR_IT_SCRIPT"
 
-# Copy the booting page to NGINX default location
-cp "$BOOTING_PAGE" /var/www/html/index.nginx-debian.html
-nginx
-
 # NGINX configuration
 NGINX_CONFIG="
 events { worker_connections 1024; }
@@ -72,5 +68,5 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 # Wait for frontend client to start
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
-# restart NGINX (both frontend and backend are running at this point)
-$WAIT_FOR_IT_SCRIPT localhost:$SERVER_PORT -t 0 && $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0 && nginx -s reload
+# start NGINX (both frontend and backend are running at this point)
+nginx -g "daemon off;"
