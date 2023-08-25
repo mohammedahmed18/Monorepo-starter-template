@@ -15,7 +15,7 @@ CLIENT_PORT=${CLIENT_PORT:-4200}
 ROOT_DIR=$(pwd)
 SERVER_DIR="$ROOT_DIR/dist/apps/server"
 CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
-BOOTING_PAGE="templates/booting.html"
+BOOTING_PAGE="templates/booting.html" # TODO: handle this
 NGINX_CONF_FILE="/etc/nginx/nginx.conf"
 WAIT_FOR_IT_SCRIPT="$ROOT_DIR/scripts/wait-for-it.sh"
 
@@ -53,8 +53,8 @@ http {
 # Apply NGINX configuration
 echo "$NGINX_CONFIG" > "$NGINX_CONF_FILE"
 
-# Remove the default NGINX index.html
-rm -rf /usr/share/nginx/html/*
+# overwrite the default NGINX index.html file to show a booting page
+cp "$BOOTING_PAGE" /usr/share/nginx/html/index.html
 
 # Start backend server
 cd "$SERVER_DIR" && node --enable-source-maps main.js &
