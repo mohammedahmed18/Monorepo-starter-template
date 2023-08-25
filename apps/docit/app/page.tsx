@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledPage = styled.div`
@@ -13,6 +14,19 @@ export default async function Index() {
    *
    * Note: The corresponding styles are in the ./index.styled-components file.
    */
+
+  // create a use effect and call the api to get the data just to make sure it works
+  const [data, setData] = useState<{message: string}>();
+  useEffect(() => {
+    (async () => {
+      const response = await fetch('/api/api');
+      const newData = await response.json();
+      setData(newData);
+    })()
+
+  });
+    
+
   return (
     <StyledPage>
       <div className="wrapper">
@@ -20,7 +34,7 @@ export default async function Index() {
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome docit 👋
+              {data?.message}
             </h1>
           </div>
 
