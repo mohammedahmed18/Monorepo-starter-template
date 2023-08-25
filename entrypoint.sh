@@ -73,4 +73,4 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
 # restart NGINX (both frontend and backend are running at this point)
-nginx -s reload -c "$NGINX_CONF_FILE" -g "daemon off;"
+$WAIT_FOR_IT_SCRIPT localhost:$SERVER_PORT -t 0 && $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0 && nginx -s reload
