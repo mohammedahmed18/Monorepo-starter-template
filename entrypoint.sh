@@ -62,6 +62,8 @@ sleep 7
 # Start backend server
 node --enable-source-maps main.js &
 
+# make the wait-for-it.sh script executable
+chmod +x ./scripts/wait-for-it.sh
 
 ./scripts/wait-for-it.sh localhost:$SERVER_PORT -t 0 -- cd ../docit \
  && npm set-script start "next start -p $CLIENT_PORT" \ 
