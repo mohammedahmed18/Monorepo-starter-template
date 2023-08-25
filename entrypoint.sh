@@ -25,7 +25,7 @@ chmod +x "$WAIT_FOR_IT_SCRIPT"
 
 # Copy the booting page to NGINX default location
 cp "$BOOTING_PAGE" /var/www/html/index.nginx-debian.html
-nginx -g "daemon off;"
+nginx
 
 # NGINX configuration
 NGINX_CONFIG="
@@ -73,4 +73,4 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
 # restart NGINX (both frontend and backend are running at this point)
-nginx -s reload
+nginx -s reload -c "$NGINX_CONF_FILE" -g "daemon off;"
