@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # declare the environment variables from the .env file
 if [ -f "./.env" ]
 then
@@ -8,14 +10,11 @@ fi
 
 
 
-init_loading_pages(){
-  local booting_page="templates/booting.html"
-  cp "$booting_page" /var/www/html/index.nginx-debian.html
-  # Start nginx page to display the Appsmith is Initializing page
-  nginx
-}
+# show the booting page until the server is ready
+local booting_page="templates/booting.html"
+cp "$booting_page" /var/www/html/index.nginx-debian.html
+nginx
 
-init_loading_pages
 
 NGINX_CONF_FILE=/etc/nginx/nginx.conf
 
@@ -56,22 +55,24 @@ rm -rf /usr/share/nginx/html/*
 
 # save the current working directory as the root directory
 export ROOT_DIR=$(pwd)
+export SERVER_DIR="$ROOT_DIR/dist/apps/server"
+export CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
 
 local wait_for_it_dir="$ROOT_DIR/scripts/wait-for-it.sh"
 
 # make the wait-for-it.sh script executable
-chmod +x wait_for_it_dir
+chmod +x "$wait_for_it_dir"
 
 
-cd dist/apps/server
-
+# Wait for a certain duration before proceeding
 sleep 7
 
+
 # Start backend server
-node --enable-source-maps main.js &
+cd $SERVER_DIR && node --enable-source-maps main.js &
 
 # wait for the server to start then start the client
-wait_for_it_dir localhost:$SERVER_PORT -t 0 -- cd ../docit \
+wait_for_it_dir localhost:$SERVER_PORT -t 0 -- cd $CLIENT_DIR \
  && npm set-script start "next start -p $CLIENT_PORT" \ 
  && npm run start &
 
