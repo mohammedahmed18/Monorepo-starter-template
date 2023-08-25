@@ -31,7 +31,7 @@ RUN npm ci
 COPY . .
 
 # Build the apps
-RUN nx run-many --target=build --project=server --target=build --project=docit --skip-nx-cache
+RUN npx nx run-many --target=build --projects=server,docit --skip-nx-cache
 
 # Set up entrypoint script
 COPY entrypoint.sh /
