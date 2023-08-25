@@ -54,6 +54,14 @@ echo "
 # remove the default nginx index.html
 rm -rf /usr/share/nginx/html/*
 
+# save the current working directory as the root directory
+export ROOT_DIR=$(pwd)
+
+local wait_for_it_dir="$ROOT_DIR/scripts/wait-for-it.sh"
+
+# make the wait-for-it.sh script executable
+chmod +x wait_for_it_dir
+
 
 cd dist/apps/server
 
@@ -62,13 +70,11 @@ sleep 7
 # Start backend server
 node --enable-source-maps main.js &
 
-# make the wait-for-it.sh script executable
-chmod +x ./scripts/wait-for-it.sh
-
-./scripts/wait-for-it.sh localhost:$SERVER_PORT -t 0 -- cd ../docit \
+# wait for the server to start then start the client
+wait_for_it_dir localhost:$SERVER_PORT -t 0 -- cd ../docit \
  && npm set-script start "next start -p $CLIENT_PORT" \ 
  && npm run start &
 
 
-# wait for the client to start then start nginx
-./scripts/wait-for-it.sh localhost:$CLIENT_PORT -t 0 -- nginx -g "daemon off;"
+# wait for the client to start then start the nginx server (at this point both the client and server are running)
+wait_for_it_dir localhost:$CLIENT_PORT -t 0 -- nginx -g "daemon off;"
