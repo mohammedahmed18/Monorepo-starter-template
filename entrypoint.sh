@@ -11,7 +11,7 @@ fi
 
 
 # show the booting page until the server is ready
-local booting_page="templates/booting.html"
+booting_page="templates/booting.html"
 cp "$booting_page" /var/www/html/index.nginx-debian.html
 nginx
 
@@ -54,11 +54,11 @@ echo "
 rm -rf /usr/share/nginx/html/*
 
 # save the current working directory as the root directory
-export ROOT_DIR=$(pwd)
-export SERVER_DIR="$ROOT_DIR/dist/apps/server"
-export CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
+ROOT_DIR=$(pwd)
+SERVER_DIR="$ROOT_DIR/dist/apps/server"
+CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
 
-local wait_for_it_dir="$ROOT_DIR/scripts/wait-for-it.sh"
+wait_for_it_dir="$ROOT_DIR/scripts/wait-for-it.sh"
 
 # make the wait-for-it.sh script executable
 chmod +x "$wait_for_it_dir"
