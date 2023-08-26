@@ -14,8 +14,7 @@ else
         --force-renewal
 
     if (($? != 0)); then
-        echo "ERROR: certbot request failed for $CUSTOM_DOMAIN use http on port 80 - exiting"
-        exit 1
+        echo "ERROR: certbot request failed for $CUSTOM_DOMAIN use http on port 80"
     else
         cp /usr/app/deploy/letsencrypt/options-ssl-nginx.conf /etc/letsencrypt/options-ssl-nginx.conf
         cp /usr/app/deploy/letsencrypt/ssl-dhparams.pem /etc/letsencrypt/ssl-dhparams.pem

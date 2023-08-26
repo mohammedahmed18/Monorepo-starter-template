@@ -60,10 +60,9 @@ RUN mkdir -p /var/log/nginx && \
 
 RUN chmod +x ./deploy/letsencrypt/certificate-request.sh ./deploy/letsencrypt/certificate-renew.sh
 
-# Set up entrypoint script
-COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+RUN chmod +x start-prod.sh
 
 EXPOSE 443
 EXPOSE 80
+
+ENTRYPOINT ["./start-prod.sh"]

@@ -16,6 +16,16 @@ SERVER_DIR="$ROOT_DIR/dist/apps/server"
 CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
 WAIT_FOR_IT_SCRIPT="$ROOT_DIR/scripts/wait-for-it.sh"
 
+# start nginx
+nginx -g "daemon off;" &
+
+if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
+    # Add monthly cron job to renew certbot certificate
+    echo -n "* * 2 * * root exec "$ROOT_DIR"/deploy/letsencrypt/certificate-renew.sh ${CUSTOM_DOMAIN}" >> /etc/cron.d/certificate-renew
+    chmod +x /etc/cron.d/certificate-renew
+    # Request the certbot certificate
+    "$ROOT_DIR"/deploy/letsencrypt/certificate-request.sh ${CUSTOM_DOMAIN}
+fi
 
 # Make the wait-for-it.sh script executable
 chmod +x "$WAIT_FOR_IT_SCRIPT"
@@ -34,16 +44,4 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
 
-# Start nginx (now that the backend and frontend servers are running) in the background
-nginx -g "daemon off;" &
-
-if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
-    # Add monthly cron job to renew certbot certificate
-    echo -n "* * 2 * * root exec "$ROOT_DIR"/deploy/letsencrypt/certificate-renew.sh ${CUSTOM_DOMAIN}" >> /etc/cron.d/certificate-renew
-    chmod +x /etc/cron.d/certificate-renew
-    # Request the certbot certificate
-    "$ROOT_DIR"/deploy/letsencrypt/certificate-request.sh ${CUSTOM_DOMAIN}
-    # restart nginx to use the new certificate
-    nginx -s reload
-fi
-
+nginx -s reload
