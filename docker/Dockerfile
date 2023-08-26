@@ -18,7 +18,22 @@ RUN curl -O https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz \
     && rm node-v16.14.2-linux-x64.tar.xz
 ENV PATH=/usr/local/lib/nodejs/bin:$PATH
 
-WORKDIR /user/app
+
+# Clean up cache files
+RUN rm -rf \
+  /root/.cache \
+  /root/.npm \
+  /root/.pip \
+  /usr/local/share/doc \
+  /usr/share/doc \
+  /usr/share/man \
+  /var/lib/apt/lists/* \
+  /tmp/*
+
+
+VOLUME [ "/data-volume" ]
+
+WORKDIR /usr/app
 
 # installl the nx cli
 RUN npm install -g nx
@@ -33,10 +48,24 @@ COPY . .
 # Build the apps
 RUN npx nx run-many --target=build --projects=server,docit --skip-nx-cache
 
+
+# setup nginx
+ADD nginx/single/nginx.conf /etc/nginx
+ADD nginx/single/nginx-default-site.conf /etc/nginx/sites-enabled/default
+COPY nginx/booting.html /usr/share/nginx/html/index.html
+RUN mkdir -p /var/log/nginx && \
+  touch /var/log/nginx/error.log && \
+  touch /var/run/nginx.pid && \
+  usermod -a -G tty www-data
+
+# setup letsencrypt
+RUN apt-get install -y certbot python3-certbot-nginx
+RUN chmod +x ./deploy/letsencrypt/certificate-request.sh ./deploy/letsencrypt/certificate-renew.sh
+
 # Set up entrypoint script
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-
+EXPOSE 443
 EXPOSE 80

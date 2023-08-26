@@ -1,12 +1,16 @@
 # write a docker compose file to run the app from the current directory
 version: '3'
 services:
-  app:
+  docit:
+    container_name: docit-app
     build: 
       context: .
       dockerfile: docker/Dockerfile
     ports:
-      - "4200:4200"
-      - "3000:3000"
+      - "80:80"
+      - "443:443"
+    environment:
+      - CUSTOM_DOMAIN=dev.safal.com
     volumes:
-      - .:/app-volume
+      - ./stacks:/data-volume
+    restart: unless-stopped
