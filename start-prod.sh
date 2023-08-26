@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 
 # Load environment variables from the .env file
 if [ -f "./.env" ]; then
