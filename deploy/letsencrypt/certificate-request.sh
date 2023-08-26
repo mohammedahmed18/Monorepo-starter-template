@@ -27,24 +27,6 @@ mkdir -p "$live_path" && openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
 echo "Removing key now that validation is done for $CUSTOM_DOMAIN..."
 rm -Rfv /etc/letsencrypt/live/$CUSTOM_DOMAIN /etc/letsencrypt/archive/$CUSTOM_DOMAIN /etc/letsencrypt/renewal/$CUSTOM_DOMAIN.conf
 
-echo "Generating certification for domain $CUSTOM_DOMAIN"
-mkdir -p "$data_path/certbot"
-certbot certonly --webroot --webroot-path="$data_path/certbot" \
-    --register-unsafely-without-email \
-    --domains $APPSMITH_CUSTOM_DOMAIN \
-    --rsa-key-size $rsa_key_size \
-    --agree-tos \
-    --force-renewal
-
-if (($? != 0)); then
-    echo "Stop Nginx due to provisioning fail"
-    nginx -s stop
-    return 1
-fi
-
-echo "Stop Nginx"
-nginx -s stop
-
 # Request from Lets Encrypt
 certbot certonly --webroot --webroot-path="/var/www/html" \
     --register-unsafely-without-email \
