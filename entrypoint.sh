@@ -34,8 +34,8 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
 
-# Start nginx (now that the backend and frontend servers are running)
-nginx -g "daemon off;"
+# Start nginx (now that the backend and frontend servers are running) in the background
+nginx -g "daemon off;" &
 
 if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
     # Add monthly cron job to renew certbot certificate
