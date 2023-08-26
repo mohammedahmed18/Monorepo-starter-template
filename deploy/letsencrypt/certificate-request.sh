@@ -10,6 +10,7 @@ else
         --register-unsafely-without-email \
         --domains $CUSTOM_DOMAIN \
         --rsa-key-size 4096 \
+        --test-cert
         --agree-tos \
         --force-renewal
 

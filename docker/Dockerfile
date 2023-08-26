@@ -65,4 +65,4 @@ RUN chmod +x start-prod.sh
 EXPOSE 443
 EXPOSE 80
 
-ENTRYPOINT ["./start-prod.sh"]
+CMD ["./start-prod.sh"]
