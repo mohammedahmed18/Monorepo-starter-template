@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies
 RUN apt-get update -yq \
-    && apt-get install curl gnupg zip nginx -yq \
+    && apt-get install curl gnupg zip nginx certbot python3-certbot-nginx -yq \
     && apt-get install -yq build-essential \
     && apt-get clean -y
 
@@ -58,8 +58,6 @@ RUN mkdir -p /var/log/nginx && \
   touch /var/run/nginx.pid && \
   usermod -a -G tty www-data
 
-# setup letsencrypt
-RUN apt-get install -y certbot python3-certbot-nginx
 RUN chmod +x ./deploy/letsencrypt/certificate-request.sh ./deploy/letsencrypt/certificate-renew.sh
 
 # Set up entrypoint script
