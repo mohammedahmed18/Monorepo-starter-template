@@ -15,9 +15,6 @@ SERVER_DIR="$ROOT_DIR/dist/apps/server"
 CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
 WAIT_FOR_IT_SCRIPT="$ROOT_DIR/scripts/wait-for-it.sh"
 
-# start nginx
-nginx -g "daemon off;" &
-
 if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
     # Add monthly cron job to renew certbot certificate
     echo -n "* * 2 * * root exec "$ROOT_DIR"/deploy/letsencrypt/certificate-renew.sh ${CUSTOM_DOMAIN}" >> /etc/cron.d/certificate-renew
@@ -42,5 +39,5 @@ cd "$CLIENT_DIR" && npm set-script start "next start -p $CLIENT_PORT" && npm run
 # Wait for frontend client to start
 $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
-
-nginx -s reload
+# start nginx server
+exec nginx -g "daemon off;error_log stderr info;"
