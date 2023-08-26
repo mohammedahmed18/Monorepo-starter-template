@@ -1,10 +1,11 @@
 #!/bin/bash
+
 CUSTOM_DOMAIN="$1"
 
 # start nginx to verify domain ownership
 nginx
 
-local live_path="/etc/letsencrypt/live/$CUSTOM_DOMAIN"
+live_path="/etc/letsencrypt/live/$CUSTOM_DOMAIN"
 
 if [[ -e "$live_path" ]]; then
     echo "Existing certificate for domain $CUSTOM_DOMAIN"
