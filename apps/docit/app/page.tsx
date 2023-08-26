@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { API_BASE_URL } from '../api/config';
 
 const StyledPage = styled.div`
   .page {
@@ -19,7 +20,7 @@ export default function Index() {
   const [data, setData] = useState<{message: string}>();
   useEffect(() => {
     (async () => {
-      const response = await fetch('/api/api');
+      const response = await fetch(API_BASE_URL);
       const newData = await response.json();
       setData(newData);
     })()
