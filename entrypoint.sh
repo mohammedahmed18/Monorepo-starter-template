@@ -35,7 +35,7 @@ $WAIT_FOR_IT_SCRIPT localhost:$CLIENT_PORT -t 0
 
 
 # Start nginx (now that the backend and frontend servers are running)
-/etc/init.d/nginx restart
+nginx -g "daemon off;"
 
 if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
     # Add monthly cron job to renew certbot certificate
@@ -43,6 +43,7 @@ if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
     chmod +x /etc/cron.d/certificate-renew
     # Request the certbot certificate
     "$ROOT_DIR"/deploy/letsencrypt/certificate-request.sh ${CUSTOM_DOMAIN}
-    /etc/init.d/nginx restart
+    # restart nginx to use the new certificate
+    nginx -s reload
 fi
 

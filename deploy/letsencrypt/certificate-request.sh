@@ -17,7 +17,4 @@ else
     cp /usr/app/deploy/letsencrypt/nginx-ssl.conf /etc/nginx/sites-available/nginx-ssl.conf
     sed -i "s/CUSTOM_DOMAIN/$CUSTOM_DOMAIN/g" /etc/nginx/sites-available/nginx-ssl.conf
     ln -s /etc/nginx/sites-available/nginx-ssl.conf /etc/nginx/sites-enabled/nginx-ssl.conf
-
-    echo "INFO: restart nginx after certbot request"
-    /etc/init.d/nginx restart 
 fi
