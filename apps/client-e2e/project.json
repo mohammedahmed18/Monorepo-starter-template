@@ -1,19 +1,19 @@
 {
-  "name": "docit-e2e",
+  "name": "client-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/docit-e2e/src",
+  "sourceRoot": "apps/client-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/docit-e2e/cypress.config.ts",
-        "devServerTarget": "docit:serve:development",
+        "cypressConfig": "apps/client-e2e/cypress.config.ts",
+        "devServerTarget": "client:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "docit:serve:production"
+          "devServerTarget": "client:serve:production"
         }
       }
     },
@@ -21,10 +21,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/docit-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/client-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["docit"]
+  "implicitDependencies": ["client"]
 }

@@ -1,7 +1,7 @@
 {
-  "name": "docit",
+  "name": "client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/docit",
+  "sourceRoot": "apps/client",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,11 +9,11 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/docit"
+        "outputPath": "dist/apps/client"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/docit"
+          "outputPath": "apps/client"
         },
         "production": {}
       }
@@ -22,16 +22,16 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "docit:build",
+        "buildTarget": "client:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "docit:build:development",
+          "buildTarget": "client:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "docit:build:production",
+          "buildTarget": "client:build:production",
           "dev": false
         }
       }
@@ -39,14 +39,14 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "docit:build:production"
+        "buildTarget": "client:build:production"
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/docit/jest.config.ts",
+        "jestConfig": "apps/client/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -60,7 +60,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/docit/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/client/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

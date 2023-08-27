@@ -12,7 +12,7 @@ CLIENT_PORT=4200
 # Define paths
 ROOT_DIR=$(pwd)
 SERVER_DIR="$ROOT_DIR/dist/apps/server"
-CLIENT_DIR="$ROOT_DIR/dist/apps/docit"
+CLIENT_DIR="$ROOT_DIR/dist/apps/client"
 WAIT_FOR_IT_SCRIPT="$ROOT_DIR/scripts/wait-for-it.sh"
 
 

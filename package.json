@@ -1,9 +1,9 @@
 {
-  "name": "docit",
+  "name": "monorepo-template",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "frontend": "nx serve docit",
+    "frontend": "nx serve client",
     "backend": "nx serve server",
     "dev": "concurrently -p \"[{name}]\" -n \"frontend,backend\" -c \"bgBlue.bold,bgGreen.bold\" \"yarn:frontend\" \"yarn:backend\""
   },

@@ -46,7 +46,7 @@ RUN npm ci
 COPY . .
 
 # Build the apps
-RUN npx nx run-many --target=build --projects=server,docit --skip-nx-cache
+RUN npx nx run-many --target=build --projects=server,client --skip-nx-cache
 
 
 # setup nginx

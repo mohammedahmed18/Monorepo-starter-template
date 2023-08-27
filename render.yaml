@@ -2,11 +2,10 @@ previewsEnabled: false
 previewsExpireAfterDays: 2
 services:
   - type: web
-    name: Docit
+    name: monorepo-template
     env: docker
     dockerfilePath: ./docker/Dockerfile
     dockerContext: ./
-    # healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -14,8 +13,10 @@ services:
           property: connectionString
       - key: PORT
         value: 80
+      # - key: CUSTOM_DOMAIN
+      #   value: 
 databases:
   - name: postgres-db
     plan: starter
-    databaseName: docit_db_preview
+    databaseName: test_db
     postgresMajorVersion: 15

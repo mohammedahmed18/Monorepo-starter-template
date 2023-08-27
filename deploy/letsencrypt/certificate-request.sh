@@ -28,6 +28,7 @@ echo "Removing key now that validation is done for $CUSTOM_DOMAIN..."
 rm -Rfv /etc/letsencrypt/live/$CUSTOM_DOMAIN /etc/letsencrypt/archive/$CUSTOM_DOMAIN /etc/letsencrypt/renewal/$CUSTOM_DOMAIN.conf
 
 # Request from Lets Encrypt
+# TODO: remove the --test-cert flag
 certbot certonly --webroot --webroot-path="/var/www/html" \
     --register-unsafely-without-email \
     --domains $CUSTOM_DOMAIN \
