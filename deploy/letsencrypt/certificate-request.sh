@@ -33,11 +33,12 @@ certbot certonly --webroot --webroot-path="/var/www/html" \
     --domains $CUSTOM_DOMAIN \
     --rsa-key-size 4096 \
     --agree-tos \
+    --test-cert
     --force-renewal
 
 if (($? != 0)); then
     echo "ERROR: certbot request failed for $CUSTOM_DOMAIN use http on port 80"
-    return 1
+    exit 1
 else
     cp /usr/app/deploy/letsencrypt/options-ssl-nginx.conf /etc/letsencrypt/options-ssl-nginx.conf
     cp /usr/app/deploy/letsencrypt/ssl-dhparams.pem /etc/letsencrypt/ssl-dhparams.pem
