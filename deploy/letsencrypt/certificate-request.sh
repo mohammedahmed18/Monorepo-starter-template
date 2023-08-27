@@ -33,7 +33,7 @@ certbot certonly --webroot --webroot-path="/var/www/html" \
     --domains $CUSTOM_DOMAIN \
     --rsa-key-size 4096 \
     --agree-tos \
-    --test-cert
+    --test-cert \
     --force-renewal
 
 if (($? != 0)); then
